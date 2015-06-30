@@ -9,8 +9,10 @@ import pandas as pd
 import os
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
-from sklearn.multiclass import OneVsRestClassifier
+from sklearn.multiclass import OneVsOneClassifier
 from sklearn.svm import LinearSVC
+from sklearn.multiclass import OneVsRestClassifier
+from sklearn.multiclass import OutputCodeClassifier
 
 #Path to read from
 data_path=os.path.abspath('data')
@@ -46,9 +48,9 @@ test_count=vectorizer.transform(test.Phrase)
 test_tf_idf=tf_idf.transform(test_count)
 
 print "Training the Model and predicting on the Test data.."
-predicted1=OneVsRestClassifier(LinearSVC(random_state=0)).fit(train_tf_idf,train.Sentiment).predict(test_tf_idf)
+predicted1=OutputCodeClassifier(LinearSVC(random_state=0),code_size=2,random_state=0).fit(train_tf_idf, train.Sentiment).predict(test_tf_idf)
 
 
 print "Writing the output in a csv file..."
 output=pd.DataFrame(data={"PhraseId":test.PhraseId,"Sentiment":predicted1})
-output.to_csv("Sentiment Analysis on Movie Reviews -- OneVsRest",index=False,quoting=3)
+output.to_csv("Sentiment Analysis on Movie Reviews -- OutputCode",index=False,quoting=3)
