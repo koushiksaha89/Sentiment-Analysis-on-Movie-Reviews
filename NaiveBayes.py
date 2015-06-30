@@ -56,4 +56,4 @@ predicted=model.predict(test_tf_idf)
 #predicton output to csv
 print "Writing output in a csv file \n"
 output=pd.DataFrame(data={"PhraseId":test.PhraseId,"Sentiment":predicted})
-output.to_csv("Sentiment Analysis on Movie Reviews",index=False,quoting=3)
+output.to_csv("Sentiment Analysis on Movie Reviews -- NaiveBayes",index=False,quoting=3)
